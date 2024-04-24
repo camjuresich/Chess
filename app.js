@@ -5,16 +5,24 @@ const drawBoard = function(){
     const board = document.getElementById("board")
     
     
-    
-    for (let i = 0; i < 64; i++) {
-        const space = document.createElement("div")
-        board.appendChild(space)
-        if (i % 2 === 0) {
-            space.classList.add("white")
-        } else {
-            space.classList.add("black")
+    for (let i = 0; i < 8; i++) {
+        let w = "white"
+        let b = "black"
+        if(i % 2 === 1) {
+            w = "black"
+            b = "white"
         }
-        space.classList.add("space")
+        for (let i = 0; i < 8; i++) {
+            const space = document.createElement("div")
+            board.appendChild(space)
+            if (i % 2 === 0) {
+                space.classList.add(w)
+            } else {
+                space.classList.add(b)
+            }
+            space.classList.add("space")
+        }
     }
+
 }
 drawBoard();
