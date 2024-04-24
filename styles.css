@@ -1,3 +1,30 @@
 body {
-    background-color: ;
+    display: block;
+    background-color: gray;
+    padding: 0%;
+    margin: 0%;
+}
+/* I will need to create a style that applys to both the white
+ and black spaces on a chess board */
+/* I think it would be best to start with a set size rather than dynamic */
+#board {
+    width: 800px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+.space {
+    height: 100px;
+    width: 100px;
+        padding: 0%;
+    margin: 0%;
+}
+
+.black {
+    background-color: black;
+}
+
+.white {
+    background-color: white;
 }
