@@ -20,6 +20,8 @@ const drawBoard = function(){
             col = aToH[j];
             const space = document.createElement("div")
             board.appendChild(space)
+            let piece = space.appendChild(document.createElement("img"))
+            piece.setAttribute("src", "svgs/pawn-svgrepo-com.svg")
             if (j % 2 === 0) {
                 space.classList.add(w)
             } else {
