@@ -3,7 +3,7 @@
 // I believe css grid would be good to use in this case 
 // https://dev.to/hira_zaira/create-a-chessboard-using-css-grid-3iil
 // 
-const drawBoard = function(){
+const drawBoard = function() {
     const board = document.getElementById("board")
     const aToH = "abcdefgh"
     const oneToEight = "87654321"
@@ -21,7 +21,7 @@ const drawBoard = function(){
             const space = document.createElement("div")
             board.appendChild(space)
             let piece = space.appendChild(document.createElement("img"))
-            piece.setAttribute("src", "svgs/pawn-svgrepo-com.svg")
+            piece.setAttribute("src", "svgs/bishop-svgrepo-com.svg")
             if (j % 2 === 0) {
                 space.classList.add(w)
             } else {
@@ -31,6 +31,16 @@ const drawBoard = function(){
             space.classList.add("space")
         }
     }
+
+}
+/* ////////////////////////////////// */
+// PLACE THE GAME PIECES ON THE BOARD 
+/* ////////////////////////////////// */
+const setUpGame = function() {
+    let piece = space.appendChild(document.createElement("img"))
+    piece.setAttribute("src", "svgs/king-svgrepo-com.svg")
+
+    // CREATE SEPARATE FUNCTIOSNS TO PLACE THE PIECES ON THE BOARD
 
 }
 drawBoard();
