@@ -3,6 +3,11 @@
 // I believe css grid would be good to use in this case 
 // https://dev.to/hira_zaira/create-a-chessboard-using-css-grid-3iil
 // 
+const selectedPiece = {
+    isHolding: false,
+    pieceLocation: '',
+}
+
 const drawBoard = function() {
     const board = document.getElementById("board")
     const aToH = "abcdefgh"
@@ -61,7 +66,8 @@ const setUpGame = function() {
         }
     }
     const pawns = [
-        'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7', 'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'];
+        'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7',
+        'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'];
     const rooks = ['a8', 'h8', 'a1', 'h1'];
     const knights = ['b8', 'g8', 'b1', 'g1'];
     const bishops = ['c8', 'f8', 'c1', 'f1'];
@@ -85,20 +91,38 @@ const movePiece = function () {
             let number = oneToEight[j];
             let currentSpace = `${letter}${number}`
             let node = document.getElementById(currentSpace)
-            if (node.querySelector('img')) {
-                node.onclick = function() {
-                    console.log('space is occupied')
-                }
-            } else {
-                node.onclick = function() {
-                    console.log('space is not occupied')
+            let nodeImg = node.querySelector('img')
+            if (nodeImg) {
+                node.addEventListener('click', () => {
+                    selectedPiece.isHolding = true;
+                    selectedPiece.pieceLocation = currentSpace;
+                })
+                    
+                } else {
+                node.addEventListener('click', () => {
+                    if (selectedPiece.isHolding) {
+                        //place piece and remove from piece location
+                        // node.
+                        let thenowpiece = document.getElementById(selectedPiece.pieceLocation).querySelector('img')
+                        thenowpiece.remove()
+                        node.appendChild(thenowpiece)
+                        selectedPiece.isHolding = false;
+                        selectedPiece.pieceLocation = '';
+                        movePiece();
+                    } else {
+                        console.log('please select a piece')
+                    }
+                })
                 }
             }
         } 
     }
-
+    // let node = document.getElementById('a2');
+    // node.querySelector('img').addEventListener('click', () => {
+    //     selectedPiece.isHolding = true;
+    //     console.log(selectedPiece)
+    // })
     
-}
 /*
 Your king can not have moved- 
 Once your king moves, you can no longer castle, even if you move the king back to the starting square. 
