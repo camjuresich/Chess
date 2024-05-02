@@ -3,39 +3,72 @@
 // I believe css grid would be good to use in this case 
 // https://dev.to/hira_zaira/create-a-chessboard-using-css-grid-3iil
 // 
-const selectedPiece = {
-    isHolding: false,
-    pieceLocation: '',
-}
 
-const drawBoard = function() {
-    const board = document.getElementById("board")
+
+// const drawBoard = function() {
+//     const board = document.getElementById("board")
+//     const aToH = "abcdefgh"
+//     const oneToEight = "87654321"
+    
+//     for (let i = 0; i < 8; i++) {
+//         let row = oneToEight[i];
+//         let w = "white"
+//         let b = "black"
+//         if(i % 2 === 1) {
+//             w = "black"
+//             b = "white"
+//         }
+//         for (let j = 0; j < 8; j++) {
+//             col = aToH[j];
+//             const space = document.createElement("div")
+//             board.appendChild(space)
+//             if (j % 2 === 0) {
+//                 space.classList.add(w)
+//             } else {
+//                 space.classList.add(b)
+//             }
+//             space.id = `${col}${row}`
+//             space.classList.add("space")
+//         }
+//     }
+
+// }
+
+const drawBoard = () => {
+    const board = document.getElementById('board');
     const aToH = "abcdefgh"
     const oneToEight = "87654321"
-    
-    for (let i = 0; i < 8; i++) {
-        let row = oneToEight[i];
-        let w = "white"
-        let b = "black"
-        if(i % 2 === 1) {
-            w = "black"
-            b = "white"
+    // const alternateColor = startColor => {
+    //     return startColor
+    // }
+    const createRow = (startColor) => {
+        const createEl = (type, classArr) => {
+            const el = document.createElement(type)
+            el.classList.add(...classArr)
+            return el; 
         }
-        for (let j = 0; j < 8; j++) {
-            col = aToH[j];
-            const space = document.createElement("div")
-            board.appendChild(space)
-            // let piece = space.appendChild(document.createElement("img"))
-            // piece.setAttribute("src", "svgs/bishop-svgrepo-com.svg")
-            if (j % 2 === 0) {
-                space.classList.add(w)
-            } else {
-                space.classList.add(b)
-            }
-            space.id = `${col}${row}`
-            space.classList.add("space")
+        const board = document.getElementById('board')
+        const rowContainer = createEl('div', ['row', 'g-0', 'justify-content-center'])
+        for (let i = 0; i < 8; i++) {
+            // space color should alternate between black and white spaces
+            // 
+            startColor === 'bg-dark' ? startColor = 'bg-dark' : startColor = 'bg-light'
+            const spaceContainer = createEl('div', ['col'])
+            const space = createEl('div', ['box', startColor]) // change the array to a variable that changes depending on the start color condition
+            spaceContainer.appendChild(space)
+            rowContainer.appendChild(spaceContainer)
+            startColor === 'bg-dark' ? startColor = 'bg-light' : startColor = 'bg-dark'
         }
+        board.appendChild(rowContainer)
     }
+    createRow('bg-dark')
+    createRow('bg-light')
+    createRow('bg-dark')
+    createRow('bg-light')
+    createRow('bg-dark')
+    createRow('bg-light')
+    createRow('bg-dark')
+    createRow('bg-light')
 
 }
 /* ////////////////////////////////// */
@@ -80,43 +113,7 @@ const setUpGame = function() {
     setPiece(kings, 'svgs/king-svgrepo-com.svg')
     setPiece(queens, 'svgs/queen-svgrepo-com.svg')
 }
-const movePiece = function () {
-    // if an svg is on a space allow that piece to be clicked.
-    // when piece is clicked allow piece to move anywhere there is not a piece
-    const aToH = "abcdefgh"
-    const oneToEight = "87654321"
-    for (let i = 0; i < aToH.length; i++) {
-        let letter = aToH[i];
-        for (let j = 0; j < oneToEight.length; j++) {
-            let number = oneToEight[j];
-            let currentSpace = `${letter}${number}`
-            let node = document.getElementById(currentSpace)
-            let nodeImg = node.querySelector('img')
-            if (nodeImg) {
-                node.addEventListener('click', () => {
-                    selectedPiece.isHolding = true;
-                    selectedPiece.pieceLocation = currentSpace;
-                })
-                    
-                } else {
-                node.addEventListener('click', () => {
-                    if (selectedPiece.isHolding) {
-                        //place piece and remove from piece location
-                        // node.
-                        let thenowpiece = document.getElementById(selectedPiece.pieceLocation).querySelector('img')
-                        thenowpiece.remove()
-                        node.appendChild(thenowpiece)
-                        selectedPiece.isHolding = false;
-                        selectedPiece.pieceLocation = '';
-                        movePiece();
-                    } else {
-                        console.log('please select a piece')
-                    }
-                })
-                }
-            }
-        } 
-    }
+
     // let node = document.getElementById('a2');
     // node.querySelector('img').addEventListener('click', () => {
     //     selectedPiece.isHolding = true;
@@ -145,5 +142,4 @@ All the spaces between the king and rook must be empty.
 This is part of why it’s so important to get your pieces out into the game as soon as possible! 
 */
 drawBoard();
-setUpGame();
-movePiece();
+
