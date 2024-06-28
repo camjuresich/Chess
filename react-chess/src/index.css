@@ -1,0 +1,9 @@
+.space {
+    height: 100px;
+    width: 100px;
+    text-shadow: 1px 1px #fff;
+}
+
+.black {
+    background-color: black;
+}
