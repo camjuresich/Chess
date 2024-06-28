@@ -1,5 +1,6 @@
-export default function Space({color, children}) {
+export default function Space({color, children, handleClick}) {
+
     return (
-        <div className={`space ${color}`}>{children}</div>
+        <div onClick={handleClick} className={`space ${color}`}>{children}</div>
     )
 }
