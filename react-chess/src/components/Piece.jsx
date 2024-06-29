@@ -1,5 +1,8 @@
-export default function Piece({children}) {
-
+import {useContext} from 'react'
+import {BoardContext} from '../App'
+export default function Piece({children, id}) {
+    const {setActivePiece} = useContext(BoardContext)
+    // console.log(context)
     const pieces = {
         'w-rook': '../../svgs/rook-svgrepo-com.svg',
         'b-rook': '../../svgs/rook-svgrepo-com.svg',
@@ -17,6 +20,6 @@ export default function Piece({children}) {
 
     if (!pieces[children]) <p>{children}</p>
     return (
-        <img className="piece" src={pieces[children]} />
+        <img onClick={() => setActivePiece([id, children])} className={`piece ${children[0]}`} src={pieces[children]} />
     )
 }

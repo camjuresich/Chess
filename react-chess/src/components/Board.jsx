@@ -1,14 +1,8 @@
 import Space from './Space' // assign an id to every position and a key(reuse the id)
-import {useState} from 'react'
+import {useContext} from 'react'
 import Piece from './Piece'
 
 export default function Board({boardState}) {
-    
-    const [selectedPiece, setSelectedPiece] = useState('')
-    function grabPiece () {
-        setSelectedPiece()
-    }
-
     let color = 'white'
     const spaces = Object.keys(boardState).map((position, i) => {
         const determineColor = (index, prevColor) => {
@@ -26,9 +20,9 @@ export default function Board({boardState}) {
         }
         color = determineColor(i, color)
         return (
-        <Space color={color} handleClick={(e) => console.log(e.target)} >
+        <Space key={position} id={position} color={color} handleClick={(e) => console.log(e.target)} >
             {boardState[position] && 
-            <Piece>{boardState[position]}</Piece>
+            <Piece key={i} id={position}>{boardState[position]}</Piece>
             }
         </Space>
         )

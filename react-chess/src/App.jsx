@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 import Board from './components/Board'
+
+const BoardContext = createContext()
 function App() {
   const [boardState, setBoardState] = useState({
     a8: 'b-rook', b8: 'b-knight', c8: 'b-bishop', d8: 'b-queen', e8: 'b-king', f8: 'b-bishop', g8: 'b-knight', h8: 'b-rook',
@@ -11,8 +13,12 @@ function App() {
     a2: 'w-pawn', b2: 'w-pawn', c2: 'w-pawn', d2: 'w-pawn', e2: 'w-pawn', f2: 'w-pawn', g2: 'w-pawn', h2: 'w-pawn',
     a1: 'w-rook', b1: 'w-knight', c1: 'w-bishop', d1: 'w-queen', e1: 'w-king', f1: 'w-bishop', g1: 'w-knight', h1: 'w-rook'
   })
+
   const [currentPlayer, setCurrentPlayer] = useState('white')
   const [activePiece, setActivePiece] = useState('')
+  function grabPiece (pieceObj) {
+    return setActivePiece(prevState => pieceObj)
+  }
   /* state for the board should be passed to a board component
      it's probably necessary to have some kind of active piece
      included in the state. it may also be wise to have the 
@@ -20,8 +26,12 @@ function App() {
      states into different stateful variables. 
   */
   return (
-    <Board boardState={boardState}/>
+    <BoardContext.Provider value={{setActivePiece, boardState, setBoardState, activePiece}}>
+      <Board boardState={boardState}/>
+    </BoardContext.Provider>
   )
 }
 
+
 export default App
+export {BoardContext}

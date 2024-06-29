@@ -21,3 +21,7 @@
 .piece {
     width: 80%;
 }
+
+.w {
+    filter: invert(1)
+}
