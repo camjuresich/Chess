@@ -17,9 +17,9 @@ export default function Piece({children, id}) {
         'w-pawn': '../../svgs/pawn-svgrepo-com.svg',
         'b-pawn': '../../svgs/pawn-svgrepo-com.svg'
     };
-
-    if (!pieces[children]) <p>{children}</p>
+    const styles = {}
+    if (children.slice(2) === 'pawn') styles.width = '60%'
     return (
-        <img onClick={() => setActivePiece([id, children])} className={`piece ${children[0]}`} src={pieces[children]} />
+        <img style={styles} onClick={() => setActivePiece([id, children])} className={`piece ${children[0]}`} src={pieces[children]} />
     )
 }

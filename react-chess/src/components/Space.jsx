@@ -6,13 +6,17 @@ export default function Space({color, children, handleClick, id}) {
 
         if (activePiece) {
             setBoardState(prevBoard => {
+                if (targetLocation === activePiece[0]) return {...prevBoard}
                 return {
                     ...prevBoard,
                     [targetLocation]: activePiece[1],
                     [activePiece[0]]: ''
                 }
             })
-            setActivePiece('')
+            if (targetLocation !== activePiece[0]) {
+                setActivePiece('')
+
+            }
         }
         // if there is a selected piece
         // and the space does not already have a piece in it(can fix this later)
