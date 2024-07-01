@@ -16,9 +16,6 @@ function App() {
 
   const [currentPlayer, setCurrentPlayer] = useState('white')
   const [activePiece, setActivePiece] = useState('')
-  function grabPiece (pieceObj) {
-    return setActivePiece(prevState => pieceObj)
-  }
   /* state for the board should be passed to a board component
      it's probably necessary to have some kind of active piece
      included in the state. it may also be wise to have the 
@@ -26,7 +23,7 @@ function App() {
      states into different stateful variables. 
   */
   return (
-    <BoardContext.Provider value={{setActivePiece, boardState, setBoardState, activePiece}}>
+    <BoardContext.Provider value={{setActivePiece, boardState, setBoardState, activePiece, currentPlayer, setCurrentPlayer}}>
       <Board boardState={boardState}/>
     </BoardContext.Provider>
   )

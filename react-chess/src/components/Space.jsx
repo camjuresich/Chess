@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { BoardContext } from "../App"
 export default function Space({color, children, handleClick, id}) {
-    const {setBoardState, activePiece, setActivePiece} = useContext(BoardContext)
+    const {setBoardState, activePiece, setActivePiece, setCurrentPlayer} = useContext(BoardContext)
     function moveSelectedPiece(targetLocation) {
 
         if (activePiece) {
@@ -15,7 +15,7 @@ export default function Space({color, children, handleClick, id}) {
             })
             if (targetLocation !== activePiece[0]) {
                 setActivePiece('')
-
+                setCurrentPlayer(prevPlayer => prevPlayer === 'white' ? 'black' : 'white')
             }
         }
         // if there is a selected piece
