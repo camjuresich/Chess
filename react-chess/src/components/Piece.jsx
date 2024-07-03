@@ -1,6 +1,6 @@
 import {useContext} from 'react'
 import {BoardContext} from '../App'
-export default function Piece({children, id}) {
+export default function Piece({children, id}) {// children 
     const {setActivePiece, currentPlayer} = useContext(BoardContext)
     // console.log(context)
     const pieces = {
@@ -26,8 +26,11 @@ export default function Piece({children, id}) {
     */
     function conditionallySetActivePiece() {
         if (children[0] === currentPlayer[0]) {
-            setActivePiece([id, children])
+            if (children) {
+                setActivePiece([id, children]) // 'g2', 'w-pawn'
 
+            }
+            
         }
     }
     return (

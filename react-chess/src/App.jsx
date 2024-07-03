@@ -13,7 +13,7 @@ function App() {
     a2: 'w-pawn', b2: 'w-pawn', c2: 'w-pawn', d2: 'w-pawn', e2: 'w-pawn', f2: 'w-pawn', g2: 'w-pawn', h2: 'w-pawn',
     a1: 'w-rook', b1: 'w-knight', c1: 'w-bishop', d1: 'w-queen', e1: 'w-king', f1: 'w-bishop', g1: 'w-knight', h1: 'w-rook'
   })
-
+  const [playerInCheck, setPlayerInCheck] = useState(null)
   const [currentPlayer, setCurrentPlayer] = useState('white')
   const [activePiece, setActivePiece] = useState('')
   /* state for the board should be passed to a board component
