@@ -1,21 +1,30 @@
 import {useContext} from 'react'
 import {BoardContext} from '../App'
+import king from '../../svgs/king-svgrepo-com.svg'
+import bishop from '../../svgs/bishop-svgrepo-com.svg'
+import knight from '../../svgs/knight-svgrepo-com.svg'
+import pawn from '../../svgs/pawn-svgrepo-com.svg'
+import queen from '../../svgs/queen-svgrepo-com.svg'
+import rook from '../../svgs/rook-svgrepo-com.svg'
+
+// import butt from '../../svgs'
+console.log(king)
 export default function Piece({children, id}) {// children 
     const {setActivePiece, currentPlayer} = useContext(BoardContext)
     // console.log(context)
     const pieces = {
-        'w-rook': '../../svgs/rook-svgrepo-com.svg',
-        'b-rook': '../../svgs/rook-svgrepo-com.svg',
-        'w-knight': '../../svgs/knight-svgrepo-com.svg',
-        'b-knight': '../../svgs/knight-svgrepo-com.svg',
-        'w-bishop': '../../svgs/bishop-svgrepo-com.svg',
-        'b-bishop': '../../svgs/bishop-svgrepo-com.svg',
-        'w-queen': '../../svgs/queen-svgrepo-com.svg',
-        'b-queen': '../../svgs/queen-svgrepo-com.svg',
-        'w-king': '../../svgs/king-svgrepo-com.svg',
-        'b-king': '../../svgs/king-svgrepo-com.svg',
-        'w-pawn': '../../svgs/pawn-svgrepo-com.svg',
-        'b-pawn': '../../svgs/pawn-svgrepo-com.svg'
+        'w-rook': rook,
+        'b-rook': rook,
+        'w-knight': knight,
+        'b-knight': knight,
+        'w-bishop': bishop,
+        'b-bishop': bishop,
+        'w-queen': queen,
+        'b-queen': queen,
+        'w-king': king,
+        'b-king': king,
+        'w-pawn': pawn,
+        'b-pawn': pawn
     };
     const styles = {}
     if (children.slice(2) === 'pawn') styles.width = '60%'
