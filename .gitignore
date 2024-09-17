@@ -1,2 +1,6 @@
 chess-notation-diagram.png
 /react-chess
+/node_modules
+/dist
+/.vscode
+/.netlify

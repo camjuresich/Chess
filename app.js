@@ -5,7 +5,26 @@
 // 
 const selectedPiece = {
     isHolding: false,
-    pieceLocation: '',
+    selectedNode: null
+}
+
+const movePiece = (e) => {
+    let parent = e.target.tagName === 'IMG' ? e.target.parentNode : e.target
+    if (selectedPiece.isHolding /*&& isValidMovement(selectedPiece.selectedNode)**/) {
+        if (parent.children.length > 0) {
+            parent.removeChild(parent.firstChild)
+        }
+        parent.appendChild(selectedPiece.selectedNode)
+        selectedPiece.isHolding = false
+        selectedPiece.selectedNode = null
+    }
+
+    else if (parent.children.length > 0) {
+        selectedPiece.selectedNode = parent.children[0]
+        selectedPiece.isHolding = true
+    } else {
+        console.log('please select a piece')
+    }
 }
 
 const drawBoard = function() {
@@ -24,7 +43,12 @@ const drawBoard = function() {
         for (let j = 0; j < 8; j++) {
             col = aToH[j];
             const space = document.createElement("div")
+            
             board.appendChild(space)
+            // console.log()
+            // console.log(`${aToH[j]}${oneToEight[i]}`)
+            // console.log(document.getElementById(`${aToH[j]}${oneToEight[i]}`))
+            // document.getElementById(aToH[j] + oneToEight[i]).addEventListener('click', () => console.log('butt'))
             // let piece = space.appendChild(document.createElement("img"))
             // piece.setAttribute("src", "svgs/bishop-svgrepo-com.svg")
             if (j % 2 === 0) {
@@ -34,19 +58,19 @@ const drawBoard = function() {
             }
             space.id = `${col}${row}`
             space.classList.add("space")
+            space.addEventListener('click', (e) => movePiece(e))
         }
     }
 
 }
+
 /* ////////////////////////////////// */
 // PLACE THE GAME PIECES ON THE BOARD 
 /* ////////////////////////////////// */
 const setUpGame = function() {
-
-    
     // CREATE SEPARATE FUNCTIOSNS TO PLACE THE PIECES ON THE BOARD
     // PAWNS
-    const setPiece = function(positions, source) {
+    const setPiece = function(positions, source, type) {
         // positions is an array
         // type is the class that the image will be attached to
         // source is the image source
@@ -56,15 +80,14 @@ const setUpGame = function() {
             currentElement.src = source
             // console.log(currentElement)
             if (currentPosition.includes('1') || currentPosition.includes('2')) {
-                currentElement.classList.add('whitePiece')
+                currentElement.classList.add('whitePiece', type)
             } else {
-                currentElement.classList.add('blackPiece')
-
+                currentElement.classList.add('blackPiece', type)
             }
             document.getElementById(currentPosition).appendChild(currentElement)
-            
         }
     }
+
     const pawns = [
         'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7',
         'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'];
@@ -73,50 +96,53 @@ const setUpGame = function() {
     const bishops = ['c8', 'f8', 'c1', 'f1'];
     const kings = ['e8', 'e1'];
     const queens = ['d8', 'd1'];
-    setPiece(knights, 'svgs/knight-svgrepo-com.svg')
-    setPiece(pawns,'svgs/pawn-svgrepo-com.svg')
-    setPiece(rooks, 'svgs/rook-svgrepo-com.svg')
-    setPiece(bishops, 'svgs/bishop-svgrepo-com.svg')
-    setPiece(kings, 'svgs/king-svgrepo-com.svg')
-    setPiece(queens, 'svgs/queen-svgrepo-com.svg')
+    setPiece(knights, 'svgs/knight-svgrepo-com.svg', 'knight')
+    setPiece(pawns,'svgs/pawn-svgrepo-com.svg', 'pawn')
+    setPiece(rooks, 'svgs/rook-svgrepo-com.svg', 'rook')
+    setPiece(bishops, 'svgs/bishop-svgrepo-com.svg', 'bishop')
+    setPiece(kings, 'svgs/king-svgrepo-com.svg', 'king')
+    setPiece(queens, 'svgs/queen-svgrepo-com.svg', 'queen')
 }
-const movePiece = function () {
-    // if an svg is on a space allow that piece to be clicked.
-    // when piece is clicked allow piece to move anywhere there is not a piece
-    const aToH = "abcdefgh"
-    const oneToEight = "87654321"
-    for (let i = 0; i < aToH.length; i++) {
-        let letter = aToH[i];
-        for (let j = 0; j < oneToEight.length; j++) {
-            let number = oneToEight[j];
-            let currentSpace = `${letter}${number}`
-            let node = document.getElementById(currentSpace)
-            let nodeImg = node.querySelector('img')
-            if (nodeImg) {
-                node.addEventListener('click', () => {
-                    selectedPiece.isHolding = true;
-                    selectedPiece.pieceLocation = currentSpace;
-                })
+
+// consider revising the move piece function to the drawboard function 
+
+// const movePiece = function () {
+//     // if an svg is on a space allow that piece to be clicked.
+//     // when piece is clicked allow piece to move anywhere there is not a piece
+//     const aToH = "abcdefgh"
+//     const oneToEight = "87654321"
+//     for (let i = 0; i < aToH.length; i++) {
+//         let letter = aToH[i];
+//         for (let j = 0; j < oneToEight.length; j++) {
+//             let number = oneToEight[j];
+//             let currentSpace = `${letter}${number}`
+//             let node = document.getElementById(currentSpace)
+//             let nodeImg = node.querySelector('img')
+//             if (nodeImg) {
+//                 node.addEventListener('click', () => {
+//                     selectedPiece.isHolding = true;
+//                     selectedPiece.pieceLocation = currentSpace;
+//                 })
                     
-                } else {
-                node.addEventListener('click', () => {
-                    if (selectedPiece.isHolding) {
-                        //place piece and remove from piece location
-                        // node.
-                        let thenowpiece = document.getElementById(selectedPiece.pieceLocation).querySelector('img')
-                        thenowpiece.remove()
-                        node.appendChild(thenowpiece)
-                        selectedPiece.isHolding = false;
-                        selectedPiece.pieceLocation = '';
-                        movePiece();
-                    } else {
-                        console.log('please select a piece')
-                    }
-                })
-                }
-            }
-        } 
-    }
+//                 } else {
+//                 node.addEventListener('click', () => {
+//                     if (selectedPiece.isHolding) {
+//                         //place piece and remove from piece location
+//                         // node.
+//                         let thenowpiece = document.getElementById(selectedPiece.pieceLocation).querySelector('img')
+//                         thenowpiece.remove()
+//                         node.appendChild(thenowpiece)
+//                         selectedPiece.isHolding = false;
+//                         selectedPiece.pieceLocation = '';
+//                         movePiece();
+//                     } else {
+//                         console.log('please select a piece')
+//                     }
+//                 })
+//                 }
+//             }
+//         } 
+//     }
     // let node = document.getElementById('a2');
     // node.querySelector('img').addEventListener('click', () => {
     //     selectedPiece.isHolding = true;
@@ -146,4 +172,4 @@ This is part of why it’s so important to get your pieces out into the game as 
 */
 drawBoard();
 setUpGame();
-movePiece();
+// movePiece();

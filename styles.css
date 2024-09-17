@@ -1,24 +1,29 @@
+
+/* VARIABLES */ 
+:root {
+    --square: calc(100svh/8)
+}
+
 body {
     display: block;
+    height: 1svh;
+    /* scroll-behavior: ; */
     background-color: gray;
-    padding: 0%;
-    margin: 0%;
+    padding: 0;
+    margin: 0;
 }
-/* I will need to create a style that applys to both the white
- and black spaces on a chess board */
-/* I think it would be best to start with a set size rather than dynamic */
 #board {
-    width: 800px;
-
+    margin: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    grid-template-columns: repeat(8, min(var(--square), 100px));
+    grid-template-rows: repeat(8, min(var(--square), 100px));
 }
 .space {
-    height: 100px;
-    width: 100px;
-    padding: 0%;
-    margin: 0%;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items:center;
@@ -35,12 +40,17 @@ body {
 .whitePiece {
     filter: invert(1)
 }
-
 img {
-    width: 80px;
-    height: 80px;
+    width: 80%;
     z-index: 100;
-    /* filter: invert(1) */
-    /* USE THIS FOR CHANGING THE COLOR TO WHITE */
+    
+}
+.pawn {
+    width: 60%;
+}
 
+@media (orientation: portrait) {
+    :root {
+        --square: calc(100svw/8)
+    }
 }
