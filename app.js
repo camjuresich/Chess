@@ -10,16 +10,14 @@ const movePiece = (e) => {
         if (parent.children.length > 0) {
             parent.removeChild(parent.firstChild)
         }
-        if (selectedPiece.selectedNode.parentNode !== parent) {
+        if (selectedPiece.selectedNode.parentNode !== parent) { // ensuring the piece can be deselected after selection
             parent.appendChild(selectedPiece.selectedNode)
-            console.log(prevParent)
             prevParent.classList.remove('selected')
         }    
         selectedPiece.isHolding = false
         selectedPiece.selectedNode = null
-        // console.log(selectedPiece.selectedNode.parentNode)
     }
-    else if (parent.children.length > 0) {// a piece exists and is being selected as the selected node
+    else if (parent.children.length > 0) { // when the user selects a piece 
         parent.classList.add('selected')
         selectedPiece.selectedNode = parent.children[0]
         selectedPiece.isHolding = true

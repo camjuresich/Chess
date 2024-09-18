@@ -1,7 +1,7 @@
 
 /* VARIABLES */ 
 :root {
-    --square: calc(100svh/8)
+    --square: calc((100svh/8) - 5px)
 }
 
 body {
@@ -58,12 +58,16 @@ img {
     border-radius: 5px;
     padding: .5em 1.25em;
     font-weight: bold;
-    margin: 1em auto 0;
+    margin: 1em 0 0 2em;
     display: block;
 }
 
 @media (orientation: portrait) {
+
     :root {
         --square: calc(100svw/8)
+    }
+    #game-reset-btn {
+        margin: 3em auto;
     }
 }
