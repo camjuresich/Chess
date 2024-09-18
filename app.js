@@ -1,8 +1,3 @@
-// Create a loop that draws the board.
-// the board will be drawn of many different divs 
-// I believe css grid would be good to use in this case 
-// https://dev.to/hira_zaira/create-a-chessboard-using-css-grid-3iil
-// 
 const selectedPiece = {
     isHolding: false,
     selectedNode: null
@@ -10,19 +5,25 @@ const selectedPiece = {
 
 const movePiece = (e) => {
     let parent = e.target.tagName === 'IMG' ? e.target.parentNode : e.target
-    if (selectedPiece.isHolding /*&& isValidMovement(selectedPiece.selectedNode)**/) {
+    let prevParent = selectedPiece.selectedNode !== null ? selectedPiece.selectedNode.parentNode : null 
+    if (selectedPiece.isHolding /*&& isValidMovement(selectedPiece.selectedNode)**/) {// when a piece is to be relocated
         if (parent.children.length > 0) {
             parent.removeChild(parent.firstChild)
         }
-        parent.appendChild(selectedPiece.selectedNode)
+        if (selectedPiece.selectedNode.parentNode !== parent) {
+            parent.appendChild(selectedPiece.selectedNode)
+            console.log(prevParent)
+            prevParent.classList.remove('selected')
+        }    
         selectedPiece.isHolding = false
         selectedPiece.selectedNode = null
+        // console.log(selectedPiece.selectedNode.parentNode)
     }
-
-    else if (parent.children.length > 0) {
+    else if (parent.children.length > 0) {// a piece exists and is being selected as the selected node
+        parent.classList.add('selected')
         selectedPiece.selectedNode = parent.children[0]
         selectedPiece.isHolding = true
-    } else {
+    } else {// when the user selects a space without a piece in it.
         console.log('please select a piece')
     }
 }
@@ -45,12 +46,6 @@ const drawBoard = function() {
             const space = document.createElement("div")
             
             board.appendChild(space)
-            // console.log()
-            // console.log(`${aToH[j]}${oneToEight[i]}`)
-            // console.log(document.getElementById(`${aToH[j]}${oneToEight[i]}`))
-            // document.getElementById(aToH[j] + oneToEight[i]).addEventListener('click', () => console.log('butt'))
-            // let piece = space.appendChild(document.createElement("img"))
-            // piece.setAttribute("src", "svgs/bishop-svgrepo-com.svg")
             if (j % 2 === 0) {
                 space.classList.add(w)
             } else {
@@ -61,7 +56,6 @@ const drawBoard = function() {
             space.addEventListener('click', (e) => movePiece(e))
         }
     }
-
 }
 
 /* ////////////////////////////////// */
@@ -104,51 +98,14 @@ const setUpGame = function() {
     setPiece(queens, 'svgs/queen-svgrepo-com.svg', 'queen')
 }
 
-// consider revising the move piece function to the drawboard function 
 
-// const movePiece = function () {
-//     // if an svg is on a space allow that piece to be clicked.
-//     // when piece is clicked allow piece to move anywhere there is not a piece
-//     const aToH = "abcdefgh"
-//     const oneToEight = "87654321"
-//     for (let i = 0; i < aToH.length; i++) {
-//         let letter = aToH[i];
-//         for (let j = 0; j < oneToEight.length; j++) {
-//             let number = oneToEight[j];
-//             let currentSpace = `${letter}${number}`
-//             let node = document.getElementById(currentSpace)
-//             let nodeImg = node.querySelector('img')
-//             if (nodeImg) {
-//                 node.addEventListener('click', () => {
-//                     selectedPiece.isHolding = true;
-//                     selectedPiece.pieceLocation = currentSpace;
-//                 })
-                    
-//                 } else {
-//                 node.addEventListener('click', () => {
-//                     if (selectedPiece.isHolding) {
-//                         //place piece and remove from piece location
-//                         // node.
-//                         let thenowpiece = document.getElementById(selectedPiece.pieceLocation).querySelector('img')
-//                         thenowpiece.remove()
-//                         node.appendChild(thenowpiece)
-//                         selectedPiece.isHolding = false;
-//                         selectedPiece.pieceLocation = '';
-//                         movePiece();
-//                     } else {
-//                         console.log('please select a piece')
-//                     }
-//                 })
-//                 }
-//             }
-//         } 
-//     }
-    // let node = document.getElementById('a2');
-    // node.querySelector('img').addEventListener('click', () => {
-    //     selectedPiece.isHolding = true;
-    //     console.log(selectedPiece)
-    // })
-    
+const resetBtn = document.getElementById('game-reset-btn')
+resetBtn.addEventListener('click', () => {
+    const board = document.getElementById('board') 
+    board.innerHTML = ''
+    drawBoard()
+    setUpGame()
+})
 /*
 Your king can not have moved- 
 Once your king moves, you can no longer castle, even if you move the king back to the starting square. 
@@ -172,4 +129,3 @@ This is part of why it’s so important to get your pieces out into the game as 
 */
 drawBoard();
 setUpGame();
-// movePiece();

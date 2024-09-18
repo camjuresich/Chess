@@ -28,7 +28,6 @@ body {
     justify-content: center;
     align-items:center;
 }
-
 .black {
     background-color: black;
 }
@@ -37,6 +36,9 @@ body {
     background-color: white;
 }
 
+.selected {
+    background-color: rgb(137, 255, 108);
+}
 .whitePiece {
     filter: invert(1)
 }
@@ -47,6 +49,17 @@ img {
 }
 .pawn {
     width: 60%;
+}
+
+#game-reset-btn {
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    padding: .5em 1.25em;
+    font-weight: bold;
+    margin: 1em auto 0;
+    display: block;
 }
 
 @media (orientation: portrait) {
